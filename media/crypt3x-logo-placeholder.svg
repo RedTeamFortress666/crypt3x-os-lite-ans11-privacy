@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480">
+  <rect width="640" height="480" fill="#000000"/>
+  <g opacity="0.9" fill="none" stroke="#00D962" stroke-width="3">
+    <circle cx="320" cy="180" r="120"/>
+    <circle cx="320" cy="180" r="90"/>
+    <circle cx="320" cy="180" r="60"/>
+  </g>
+  <g font-size="32" font-family="DejaVu Sans Mono, monospace" fill="#00D962" text-anchor="middle">
+    <text x="320" y="220">C R Y P 7 E X</text>
+    <text x="320" y="260">- OS -</text>
+  </g>
+  <g font-size="18" font-family="DejaVu Sans Mono, monospace" fill="#EAFEF0" text-anchor="middle">
+    <text x="320" y="420">GHO57... YOUR.... M4CH1N3</text>
+  </g>
+</svg>
