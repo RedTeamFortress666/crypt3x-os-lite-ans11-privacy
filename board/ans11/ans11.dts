@@ -1,0 +1,42 @@
+#!/bin/bash
+# SPDX-License-Identifier: MIT
+# Simple vault interface for the CRYPT3X Lite keystore
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+VAULT_BIN="$ROOT_DIR/keystore/vault.py"
+
+if [ ! -f "$VAULT_BIN" ]; then
+  echo "ERROR: keystore/vault.py not found" >&2
+  exit 1
+fi
+
+case "${1:-help}" in
+  init)
+    PIN="${2:-crypt3x-default}"
+    python3 "$VAULT_BIN" init "$PIN"
+    ;;
+  set)
+    PIN="${2:-crypt3x-default}"
+    KEY="${3:-default-key}"
+    VAL="${4:-empty}"
+    python3 "$VAULT_BIN" set "$PIN" "$KEY" "$VAL"
+    ;;
+  get)
+    PIN="${2:-crypt3x-default}"
+    KEY="${3:-default-key}"
+    python3 "$VAULT_BIN" get "$PIN" "$KEY"
+    ;;
+  lock)
+    python3 "$VAULT_BIN" lock
+    ;;
+  *)
+    cat <<'EOF'
+Usage:
+  ./keystore/vaultctl.sh init [PIN]
+  ./keystore/vaultctl.sh set [PIN] [key] [value]
+  ./keystore/vaultctl.sh get [PIN] [key]
+  ./keystore/vaultctl.sh lock
+EOF
+    ;;
+esac

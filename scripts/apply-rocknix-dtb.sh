@@ -1,52 +1,27 @@
 #!/bin/bash
-# Import ROCKNIX RK3326 device trees for ANS11
+# SPDX-License-Identifier: MIT
+# Setup CRYPT3X OS Lite ANS11 toolchain and dependency scaffold
 set -euo pipefail
 
-echo "[ROCKNIX] Extracting RK3326 device trees…"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-ROCKNIX_DTB_PATH="rocknix/projects/ROCKNIX/devices/RK3326"
+export DEBIAN_FRONTEND=noninteractive
 
-if [ ! -d "$ROCKNIX_DTB_PATH" ]; then
-  echo "ERROR: ROCKNIX device tree directory not found at $ROCKNIX_DTB_PATH" >&2
-  exit 1
+which git >/dev/null 2>&1 || { echo "ERROR: git is required" >&2; exit 1; }
+which make >/dev/null 2>&1 || { echo "ERROR: make is required" >&2; exit 1; }
+which gcc >/dev/null 2>&1 || { echo "ERROR: gcc is required" >&2; exit 1; }
+
+mkdir -p "$ROOT_DIR/out" "$ROOT_DIR/build" "$ROOT_DIR/downloads"
+
+if [ ! -d "$ROOT_DIR/rocknix" ]; then
+  git clone --depth=1 -b next https://github.com/AveyondFly/distribution_rocknix.git "$ROOT_DIR/rocknix"
 fi
 
-# Create target DTB directory
-mkdir -p board/ans11/dtb
-
-# Copy generic RK3326 device tree sources (if available)
-echo "[*] Searching for RK3326 .dts files…"
-if [ -d "$ROCKNIX_DTB_PATH/sources" ]; then
-  find "$ROCKNIX_DTB_PATH/sources" -name '*.dts' -o -name '*.dtsi' | while read -r dts; do
-    echo "  Found: $(basename "$dts")"
-    cp "$dts" board/ans11/dtb/
-  done
-else
-  echo "  (No .dts sources found; using prebuilt .dtb)"
+if [ ! -d "$ROOT_DIR/arkos4clone" ]; then
+  git clone --depth=1 -b main https://github.com/lcdyk0517/arkos4clone.git "$ROOT_DIR/arkos4clone"
 fi
 
-# Copy compiled DTBs
-echo "[*] Copying prebuilt .dtb files…"
-find "$ROCKNIX_DTB_PATH" -name 'rk3326*.dtb' | while read -r dtb; do
-  filename=$(basename "$dtb")
-  echo "  Copying: $filename"
-  cp "$dtb" board/ans11/dtb/
-done
+mkdir -p "$ROOT_DIR/board/ans11/dtb" "$ROOT_DIR/board/ans11/overlays" "$ROOT_DIR/board/ans11/uboot"
 
-# List DTB device tree selector config
-echo "[*] Device tree selector mappings:…"
-if [ -f "$ROCKNIX_DTB_PATH/packages/rk3326-dtb-select/dtb_selector.py" ]; then
-  echo "  (Reference Python selector for ANS11 variant mapping)"
-  grep -i "rk3326.*dtb" "$ROCKNIX_DTB_PATH/packages/rk3326-dtb-select/dtb_selector.py" | head -5
-fi
-
-# Copy device tree overlays
-echo "[*] Copying device tree overlays…"
-mkdir -p board/ans11/overlays
-if [ -d "$ROCKNIX_DTB_PATH/config/overlays" ]; then
-  cp "$ROCKNIX_DTB_PATH/config/overlays"/*.dtso board/ans11/overlays/ 2>/dev/null || echo "  (No .dtso overlays found)"
-fi
-
-echo "[✓] ROCKNIX RK3326 device trees imported to board/ans11/dtb/"
-echo ""
-echo "Next: ./scripts/apply-arkos4clone-quirks.sh"
+echo "ANS11 setup complete."
+echo "Next: ./scripts/apply-rocknix-dtb.sh && ./scripts/apply-arkos4clone-quirks.sh"

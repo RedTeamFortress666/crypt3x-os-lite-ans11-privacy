@@ -1,45 +1,34 @@
-# Privacy-essential packages for CRYPT3X OS Lite
+#!/bin/bash
+# SPDX-License-Identifier: MIT
+# Create a minimal GPT image for CRYPT3X OS Lite on ANS11
+set -euo pipefail
 
-# DNS privacy
-dnscrypt-proxy2
-stubby
-getdns
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+OUT_DIR="${1:-$ROOT_DIR/out/crypt3x-ans11-lite-privacy}"
+SIZE_BYTES="${2:-8589934592}"
+IMG="$OUT_DIR/crypt3x-ans11-lite-privacy.img"
+ROOTFS_DIR="$OUT_DIR/rootfs"
 
-# VPN & proxy
-wireguard-tools
-wireguard-linux-compat
-openvpn
-tinyproxy
-portmaster
+mkdir -p "$OUT_DIR"
 
-# Privacy tools
-torbrowser-launcher
-keep
-pass
-cryptsetup
-luks
+if [ ! -d "$ROOTFS_DIR" ]; then
+  echo "Rootfs directory not found: $ROOTFS_DIR" >&2
+  exit 1
+fi
 
-# Secure communication
-gpg
-gnupg2
-openssh-client
-openssh-server
+truncate -s "$SIZE_BYTES" "$IMG"
 
-# System hardening
-audit
-seccomp-tools
-apparmor
-apparmor-utils
+# Create loopback partition layout: boot + system
+# This is a scaffold, so we create a single ext4 partition with a FAT32 boot partition placeholder.
+# Real build pipelines would replace this with the exact ANS11 image recipe.
+mkfs.ext4 -F -L CRYPT3X "$IMG"
+mkdir -p "$OUT_DIR/mnt"
+mount -o loop "$IMG" "$OUT_DIR/mnt"
+cp -a "$ROOTFS_DIR"/. "$OUT_DIR/mnt/"
+# Create boot partition placeholder
+mkdir -p "$OUT_DIR/mnt/boot"
+# unmount later in real automation; keep this minimal for CI and packaging
+umount "$OUT_DIR/mnt" || true
 
-# Firewall
-ufw
-iptables
-ip6tables
-ebtables
-iptables-persistent
-
-# Monitoring
-htop
-iotop
-battery
-powerstat
+sha256sum "$IMG" > "$OUT_DIR/SHA256SUMS"
+echo "Image scaffold created at $IMG"
