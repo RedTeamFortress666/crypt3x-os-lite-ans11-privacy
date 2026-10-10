@@ -1,0 +1,12 @@
+NAME="CRYPT3X OS Lite"
+ID=crypt3x-lite
+PRETTY_NAME="CRYPT3X OS Lite for ANS11 (Privacy)"
+VERSION="0.1-ans11-lite-privacy"
+VERSION_ID="0.1"
+BUILD_ID="ans11-lite-privacy-$(date +%Y%m%d)"
+HOME_URL="https://github.com/RedTeamFortress666/crypt3x-os-lite-ans11-privacy"
+SUPPORT_URL="https://github.com/RedTeamFortress666/crypt3x-os-lite-ans11-privacy/issues"
+BUG_REPORT_URL="https://github.com/RedTeamFortress666/crypt3x-os-lite-ans11-privacy/issues"
+LOGO=crypt3x
+VARIANT="Privacy-Focused"
+VARIANT_ID="privacy-lite"

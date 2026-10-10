@@ -1,0 +1,38 @@
+# Build artifacts
+out/
+build/
+downloads/
+
+# Cloned repositories
+rocknix/
+arkos4clone/
+
+# Build cache
+*.o
+*.a
+*.so
+*.la
+*.log
+
+# OS artifacts
+*.img
+*.iso
+*.tar.gz
+*.zip
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Credentials (never commit)
+secrets/
+*.key
+*.pem
+.env

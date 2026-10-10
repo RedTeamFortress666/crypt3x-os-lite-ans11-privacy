@@ -1,0 +1,45 @@
+# Privacy-essential packages for CRYPT3X OS Lite
+
+# DNS privacy
+dnscrypt-proxy2
+stubby
+getdns
+
+# VPN & proxy
+wireguard-tools
+wireguard-linux-compat
+openvpn
+tinyproxy
+portmaster
+
+# Privacy tools
+torbrowser-launcher
+keep
+pass
+cryptsetup
+luks
+
+# Secure communication
+gpg
+gnupg2
+openssh-client
+openssh-server
+
+# System hardening
+audit
+seccomp-tools
+apparmor
+apparmor-utils
+
+# Firewall
+ufw
+iptables
+ip6tables
+ebtables
+iptables-persistent
+
+# Monitoring
+htop
+iotop
+battery
+powerstat

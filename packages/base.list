@@ -1,0 +1,78 @@
+# CRYPT3X OS Lite base packages
+# Minimal system + privacy essentials
+
+# Core
+busybox
+systemd
+dbus
+udev
+bash
+coreutils
+findutils
+grep
+sed
+util-linux
+kmod
+net-tools
+wpa_supplicant
+hostapd
+alsa-utils
+sudo
+curl
+ca-certificates
+openssl
+gnupg
+
+# Partition & filesystem
+e2fsprogs
+parted
+gdisk
+gptfdisk
+
+# Compression
+tar
+gzip
+bzip2
+xz-utils
+7zip
+zip
+unzip
+
+# Archive & hash
+sha256sum
+md5sum
+tar
+
+# Shell tools
+bash
+dash
+sh
+awk
+cut
+tr
+head
+tail
+wc
+xargs
+find
+locate
+updatedb
+
+# System monitoring (minimal)
+top
+ps
+kill
+watch
+free
+df
+du
+lsof
+netstat
+ss
+
+# Device management
+udev
+lsblk
+blkid
+fdisk
+parted

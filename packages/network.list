@@ -1,0 +1,28 @@
+# Network packages for CRYPT3X OS Lite
+
+# Connectivity
+network-manager
+network-manager-openvpn
+network-manager-wireguard
+wifi-firmware-rtl8188eu
+bluetooth
+bluetoothctl
+
+# DNS
+bind-utils
+dnsmasq
+resolvconf
+
+# Proxy & routing
+socat
+ncat
+proxy-dns
+
+# Monitoring
+wiretraffic
+wireshark
+tcpdump
+
+# Privacy DNS
+quad9
+cloudflare-dns

@@ -1,0 +1,8 @@
+# CRYPT3X OS Lite fstab for ANS11
+LABEL=BOOT   /boot   vfat   defaults,ro,fmask=0022,dmask=0022  0 2
+LABEL=CRYPT3X  /      ext4   defaults  0 1
+tmpfs        /tmp    tmpfs   defaults,nosuid,nodev,noexec,size=512M 0 0
+tmpfs        /run    tmpfs   defaults,nosuid,nodev,mode=755 0 0
+devpts       /dev/pts devpts  gid=5,mode=620 0 0
+sysfs        /sys    sysfs   defaults 0 0
+proc         /proc   proc    defaults 0 0
